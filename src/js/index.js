@@ -42,4 +42,25 @@ const material = new THREE.MeshStandardMaterial({
 });
 const box = new THREE.Mesh(geometry, material);
 scene.add(box);
-renderer.render(scene, camera);
+
+// 애니메이션
+// animate를 호출하면 브라우저가 다음 프레임을 랜더링하기 전에 animate를 반복적으로 호출한다.
+function animate() {
+  // box.rotation.y += 0.01;
+  // 변경된 속성값을 랜더링해야 화면에 반영된다.
+  renderer.render(scene, camera)
+  requestAnimationFrame(animate);
+}
+animate();
+
+// 브라우저 리사이징에 따른 반응형 처리
+window.addEventListener('resize', () => {
+  // 1. 카메라의 종횡비
+  camera.aspect = window.innerWidth/window.innerHeight;
+  // 카메라의 속성이 변경되면 카메라를 업데이트 해주어야 한다.
+  camera.updateProjectionMatrix();
+
+  // 2. 랜더러의 크기
+  renderer.setSize(window.innerWidth, window.innerHeight)
+
+})
